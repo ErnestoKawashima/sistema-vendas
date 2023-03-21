@@ -1,8 +1,15 @@
 package com.nelioalves.cursomc.dominio;
 
+import org.springframework.data.repository.cdi.Eager;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.io.Serializable;
 import java.util.Objects;
 
+@Entity
 public class Categoria implements Serializable {
 
     private static final long serialVersionUID;
@@ -11,6 +18,8 @@ public class Categoria implements Serializable {
         serialVersionUID = 1L;
     }
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String nome;
 
