@@ -10,6 +10,7 @@ import java.util.Objects;
 public class ItemPedidoPK implements Serializable {
     private static final long seralVersionUID =1L;
 
+
     @ManyToOne
     @JoinColumn(name = "pedido_id")
     private Pedido pedido;

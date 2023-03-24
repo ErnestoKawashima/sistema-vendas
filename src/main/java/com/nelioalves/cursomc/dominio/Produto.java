@@ -1,6 +1,7 @@
 package com.nelioalves.cursomc.dominio;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -25,6 +26,7 @@ public class Produto implements Serializable {
     )
 private List<Categoria> categorias = new ArrayList<>();
 
+    @JsonIgnore
     @Getter
     @Setter
     @OneToMany(mappedBy = "id.produto")
@@ -39,6 +41,7 @@ public Produto() {
         this.preco = preco;
     }
 
+    @JsonIgnore
     public List<Pedido> getPedidos() {
     List<Pedido> lista = new ArrayList<>();
     for (ItemPedido x : itens) {

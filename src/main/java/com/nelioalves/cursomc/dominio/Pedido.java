@@ -1,5 +1,7 @@
 package com.nelioalves.cursomc.dominio;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -16,34 +18,37 @@ public class Pedido implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @JsonFormat(pattern="dd/MM/yyyy HH:mm")
     private Date instante;
 
-    @OneToOne(cascade= CascadeType.ALL, mappedBy="pedido")
+    @JsonManagedReference
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "pedido")
     private Pagamento pagamento;
 
+    @JsonManagedReference
     @ManyToOne
-    @JoinColumn(name="cliente_id")
+    @JoinColumn(name = "cliente_id")
     private Cliente cliente;
 
     @ManyToOne
-    @JoinColumn(name="endereco_de_entrega_id")
+    @JoinColumn(name = "endereco_de_entrega_id")
     private Endereco enderecoDeEntrega;
 
-
-    @Getter
-    @Setter
-    @OneToMany(mappedBy = "id.pedido")
+    @OneToMany(mappedBy="id.pedido")
     private Set<ItemPedido> itens = new HashSet<>();
 
-    public Pedido() {}
+    public Pedido() {
+    }
 
     public Pedido(Integer id, Date instante, Cliente cliente, Endereco enderecoDeEntrega) {
-        super();
         this.id = id;
         this.instante = instante;
         this.cliente = cliente;
         this.enderecoDeEntrega = enderecoDeEntrega;
     }
+
+
 
     public Integer getId() {
         return id;
@@ -85,6 +90,13 @@ public class Pedido implements Serializable {
         this.enderecoDeEntrega = enderecoDeEntrega;
     }
 
+    public Set<ItemPedido> getItens() {
+        return itens;
+    }
+
+    public void setItens(Set<ItemPedido> itens) {
+        this.itens = itens;
+    }
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -109,6 +121,7 @@ public class Pedido implements Serializable {
             return false;
         return true;
     }
+
 
 
 }
